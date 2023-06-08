@@ -5,7 +5,7 @@ getcontext().prec = 4
 
 STEP =  Decimal('0.001')
 MIN_HEIGHT = 0.00001
-MAX_T = 10
+MAX_T = 100
 
 heights = {Decimal('0'): 10}
 velocities = {Decimal('0'): 0}
@@ -18,7 +18,7 @@ def height(t):
     if not heights.__contains__(t):
         h = float(STEP) * float(velocity(t - STEP)) + height(t - STEP)
         if h <= MIN_HEIGHT: return 0
-        heights.update({t: h})  
+        heights.update({t: h})
     return heights[t]
 
 
@@ -37,21 +37,18 @@ def acceleration(t):
             accelerations.update({t: -100000 * height(t) - 0.1 * velocity(t) - 9.8})
     return accelerations[t]
 
-    
 def generateData():
-    max_height_reached = False
     t = Decimal('0')
     partial_height = -9999
-    height_list = []
-    velocity_list = []
-
+   
     while(partial_height != 0):
         partial_height = height(Decimal(str(t)))
-        height_list.append(partial_height)
-        velocity_list.append(velocity(t))
         t += STEP
-    # print(height_list)
-    times = [i * 0.0001 for i in range(len(height_list))]
+    
+    times = list(heights.keys()) 
+    height_list = list(heights.values())
+    velocity_list = list(velocities.values())
+
 
     plt.plot(times, height_list)
     plt.xlabel('Tiempo')
@@ -59,8 +56,6 @@ def generateData():
     plt.title('Gráfico de alturas en función del tiempo')
     plt.grid(True)
     plt.show()
-    # print(velocity_list)
 
 if __name__ == "__main__":
     generateData()
-   
