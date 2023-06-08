@@ -4,7 +4,7 @@ import pandas as pd
 
 getcontext().prec = 7
 
-STEP = Decimal('0.001')
+STEP = Decimal('0.0001')
 MIN_HEIGHT = 0.00001
 MAX_T = 100
 
@@ -12,7 +12,7 @@ ba = 0.1
 m = 1
 b = 30
 g = 9.8
-k = 10000
+k = 100000
 
 
 def calculate_next_height(previous_height, previous_velocity):
@@ -86,7 +86,7 @@ def plot_data():
 
 
 def main():
-    generateData()
+    # generateData()
     plot_data()
 
 
