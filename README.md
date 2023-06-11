@@ -22,12 +22,15 @@ Modo de uso: Ejecutar el archivo Ejercicio6-Bortol-Fungo.py con python3 el cual 
 donde NUMERODET es el t maximo el cual se puede modificar dentro del programa, 
 junto con la altura min para alcanzar, el paso con el que se calcula  y la altura del cual empieza, luego hay 2 opciones:
   
-- Para 1 solo archivo de datos generado: ejecutar el archivo Plotter.py data_NUMERODET_tries.csv, el cual generara un archivo png con el grafico de la simulacion.
+- Para 1 solo archivo de datos generado: ejecutar el archivo Plotter.py data_NUMERODET_tries.csv, el cual generara un archivo png con el grafico de la simulacion. 
+Por Ejemplo:
+```
+python3 Plotter.py data_100_tries.csv
+```
+- Para todos los archivos de datos generados: Hay un script que se llama PlottearTodosLosGraficos que ejecuta cada instancia creada de data_NUMERODET_tries.csv
 
-- Para todos los archivos de datos generados: Hay un script que se llama EjecutarPrograma que ejecuta cada instancia creada de data_NUMERODET_tries.csv
 
-
-Autores: 
+Autores:
 - Juan Pablo Bortol
 - Augusto Fungo
         

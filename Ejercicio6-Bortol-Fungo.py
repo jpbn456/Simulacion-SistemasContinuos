@@ -27,7 +27,7 @@ def calculate_acceleration(previous_height, previous_velocity):
     if previous_height > 0:
         return -ba / m * previous_velocity - g
     else:
-        return -k * previous_height - ba * previous_velocity - g
+        return -k * previous_height - b * previous_velocity - g
 
 
 def check_change(current_height, previous_height, ascending):
