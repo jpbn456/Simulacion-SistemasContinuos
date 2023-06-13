@@ -1,5 +1,6 @@
 from decimal import Decimal, getcontext
-import pandas as pd
+
+from export_data import add_row_to_csv, init_csv_file, create_filename
 
 getcontext().prec = 7
 
@@ -38,7 +39,7 @@ def check_change(current_height, previous_height, ascending):
     return False
 
 
-def generate_data():
+def simulate():
     t = Decimal('0')
 
     current_velocity = 0.0
@@ -46,21 +47,15 @@ def generate_data():
     current_acceleration = calculate_acceleration(current_height, current_velocity)
     ascending = True
 
-    data = {'time': float(t), 'height': current_height, 'velocity': current_velocity,
-            'acceleration': current_acceleration}
-    df = pd.DataFrame(data, index=[0])
-    filename = 'data_' + str(MAX_T) + '_tries.csv'
-    df.to_csv(filename, index=False)
+    filename = create_filename(MAX_T)
+    init_csv_file(filename)
 
     while t < MAX_T:
+        add_row_to_csv(filename, t, current_height, current_velocity, current_acceleration)
         previous_height = current_height
         current_height = calculate_next_height(current_height, current_velocity)
         current_velocity = calculate_next_velocity(current_velocity, current_acceleration)
         current_acceleration = calculate_acceleration(current_height, current_velocity)
-        data = {'time': float(t), 'height': current_height, 'velocity': current_velocity,
-                'acceleration': current_acceleration}
-        df = pd.DataFrame(data, index=[0])
-        df.to_csv(filename, mode='a', header=False, index=False)
         t += STEP
         if check_change(previous_height, current_height, ascending):
             if ascending and MIN_HEIGHT > current_height > 0:
@@ -69,4 +64,4 @@ def generate_data():
 
 
 if __name__ == "__main__":
-    generate_data()
+    simulate()
