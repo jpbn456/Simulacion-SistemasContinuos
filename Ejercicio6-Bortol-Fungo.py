@@ -31,39 +31,42 @@ def calculate_acceleration(previous_height, previous_velocity):
 
 
 def check_change(current_height, previous_height, ascending):
-    if ascending and current_height < previous_height:
+    if ascending and current_height > previous_height:
         return True
-    if not ascending and previous_height < current_height:
+    if not ascending and previous_height > current_height:
         return True
     return False
 
 
-def generateData():
+def generate_data():
     t = Decimal('0')
-    previous_velocity = 0.0
-    previous_height = THROW_HEIGHT
-    previous_acceleration = calculate_acceleration(previous_height, previous_velocity)
-    ascending = False
-    data = {'time': float(t), 'height': previous_height, 'velocity': previous_velocity,
-            'acceleration': previous_acceleration}
+
+    current_velocity = 0.0
+    current_height = THROW_HEIGHT
+    current_acceleration = calculate_acceleration(current_height, current_velocity)
+    ascending = True
+
+    data = {'time': float(t), 'height': current_height, 'velocity': current_velocity,
+            'acceleration': current_acceleration}
     df = pd.DataFrame(data, index=[0])
     filename = 'data_' + str(MAX_T) + '_tries.csv'
     df.to_csv(filename, index=False)
+
     while t < MAX_T:
-        current_height = previous_height
-        previous_height = calculate_next_height(previous_height, previous_velocity)
-        previous_velocity = calculate_next_velocity(previous_velocity, previous_acceleration)
-        previous_acceleration = calculate_acceleration(previous_height, previous_velocity)
-        data = {'time': float(t), 'height': previous_height, 'velocity': previous_velocity,
-                'acceleration': previous_acceleration}
+        previous_height = current_height
+        current_height = calculate_next_height(current_height, current_velocity)
+        current_velocity = calculate_next_velocity(current_velocity, current_acceleration)
+        current_acceleration = calculate_acceleration(current_height, current_velocity)
+        data = {'time': float(t), 'height': current_height, 'velocity': current_velocity,
+                'acceleration': current_acceleration}
         df = pd.DataFrame(data, index=[0])
         df.to_csv(filename, mode='a', header=False, index=False)
         t += STEP
-        if check_change(current_height, previous_height, ascending):
+        if check_change(previous_height, current_height, ascending):
             if ascending and MIN_HEIGHT > current_height > 0:
                 t = MAX_T
             ascending = not ascending
 
 
 if __name__ == "__main__":
-    generateData()
+    generate_data()
