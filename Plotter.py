@@ -20,7 +20,7 @@ def plot_csv(filename):
     plt.xlabel('Tiempo')
     plt.ylabel('Velocidad')
     plt.title('Gráfico de velocidades en función del tiempo')
-    plt.grid(True)
+    plt.grid( True)
     plt.show()
 
 
